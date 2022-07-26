@@ -5,9 +5,11 @@ import (
 	"go-api/entities/userEntities"
 )
 
-var (
-	listUser = make([]*userEntities.User, 0)
-)
+var listUser = []*userEntities.User{
+	{Id: "1-duong", Name: "Duong", Address: "Nga Thuy - Nga Son - Thanh Hoa"},
+	{Id: "2-phi", Name: "Phi", Address: "Nga Trung - Nga Son - Thanh Hoa"},
+	{Id: "3-thanh", Name: "Thanh", Address: "TT Nga Son - Thanh Hoa"},
+}
 
 func CreateUser(user *userEntities.User) bool {
 	if user.Id != "" && user.Name != "" && user.Address != "" {
