@@ -12,15 +12,28 @@ func GetAllUser(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, users)
 }
 
-func GetUser(c *gin.Context) {
+func GetUserQuery(c *gin.Context) {
+	id := c.Query("id")
+	users := userModels.GetAllUser()
+
+	fmt.Println("id", id)
+	// Loop over the list of users, looking for user matched
+	for _, a := range users {
+		if a.Id == id {
+			c.IndentedJSON(http.StatusOK, a)
+			return
+		}
+	}
+
+	c.IndentedJSON(http.StatusNotFound, gin.H{"message": "User not found"})
+}
+
+func GetUserParam(c *gin.Context) {
 	id := c.Param("id")
 	users := userModels.GetAllUser()
 
 	fmt.Println("id", id)
-	fmt.Println("users", users)
-
-	// Loop over the list of albums, looking for
-	// an album whose ID value matches the parameter.
+	// Loop over the list of users, looking for user matched
 
 	for _, a := range users {
 		if a.Id == id {
