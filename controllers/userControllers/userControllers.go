@@ -1,4 +1,4 @@
-package usersControllers
+package userControllers
 
 import (
 	"github.com/gin-gonic/gin"
