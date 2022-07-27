@@ -1,8 +1,15 @@
 ## Start API
 
 ```bash
+# Install
 go get .
-go run .
+
+# Run
+go run . 
+
+or 
+
+go build -o server && ./server
 ```
 
 ## Test call api

@@ -1,22 +1,31 @@
 package userControllers
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"go-api/models/userModels"
+	"log"
 	"net/http"
+	"os"
 )
 
 func GetAllUser(c *gin.Context) {
 	users := userModels.GetAllUser()
+	nodeEnv := os.Getenv("NODE_ENV")
+
+	log.Println("nodeEnv", nodeEnv)
+
 	c.IndentedJSON(http.StatusOK, users)
 }
 
 func GetUserQuery(c *gin.Context) {
 	id := c.Query("id")
 	users := userModels.GetAllUser()
+	nodeEnv := os.Getenv("NODE_ENV")
 
-	fmt.Println("id", id)
+	log.Println("id", id)
+	log.Println("users", users)
+	log.Println("nodeEnv", nodeEnv)
+
 	// Loop over the list of users, looking for user matched
 	for _, a := range users {
 		if a.Id == id {
@@ -31,8 +40,12 @@ func GetUserQuery(c *gin.Context) {
 func GetUserParam(c *gin.Context) {
 	id := c.Param("id")
 	users := userModels.GetAllUser()
+	nodeEnv := os.Getenv("NODE_ENV")
 
-	fmt.Println("id", id)
+	log.Println("id", id)
+	log.Println("users", users)
+	log.Println("nodeEnv", nodeEnv)
+
 	// Loop over the list of users, looking for user matched
 
 	for _, a := range users {
