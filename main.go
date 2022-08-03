@@ -2,20 +2,43 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/joho/godotenv"
+	"github.com/subosito/gotenv"
 	"go-api/controllers/userControllers"
-	"log"
+	"go-api/initFirebase"
+	"net/http"
 	"os"
 )
 
+func init() {
+	gotenv.Load(".env")
+	if os.Getenv("GO_ENV") != "dev" {
+		gin.SetMode(gin.ReleaseMode)
+	}
+}
+
 func main() {
-	err := godotenv.Load(".env.dev")
-	if err != nil {
-		log.Fatal("Error loading .env file")
+	println("Running on port:", os.Getenv("GO_PORT"))
+	router := gin.Default()
+	router.LoadHTMLFiles("static/index.html")
+
+	if os.Getenv("GO_ENV") == "dev" {
+		router.SetTrustedProxies([]string{"0.0.0.0"})
 	}
 
-	router := gin.Default()
-	router.SetTrustedProxies([]string{"127.0.0.1"})
+	// create/configure database instance
+	db := initFirebase.InitFirestore()
+	auth := initFirebase.InitAuth()
+
+	// set db to gin context with a middleware to all incoming request
+	router.Use(func(c *gin.Context) {
+		c.Set("db", db)
+		c.Set("auth", auth)
+	})
+
+	// get route /
+	router.GET("/", func(c *gin.Context) {
+		c.HTML(http.StatusOK, "index.html", nil)
+	})
 
 	router.GET("/api/user/list", userControllers.GetAllUser)
 	router.GET("/api/user/get", userControllers.GetUserQuery)
@@ -24,5 +47,5 @@ func main() {
 	router.POST("/api/user/update", userControllers.UpdateUser)
 	router.POST("/api/user/delete", userControllers.DeleteUser)
 
-	router.Run("127.0.0.1:" + os.Getenv("PORT"))
+	router.Run("0.0.0.0:" + os.Getenv("GO_PORT"))
 }

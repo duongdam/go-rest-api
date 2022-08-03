@@ -5,9 +5,9 @@
 go get .
 
 # Run
-go run . 
+go run .
 
-or 
+or
 
 go build -o server && ./server
 ```
@@ -20,32 +20,42 @@ curl --location --request GET 'http://localhost:8080/api/user/list'
 // output
 [
     {
-        "id": "1-duong",
-        "name": "Duong",
-        "address": "Nga Thuy - Nga Son - Thanh Hoa"
+        "id": "1-kenzo",
+        "name": "Kenzo",
+        "address": "Tokyo - Japan"
     },
     {
-        "id": "2-phi",
-        "name": "Phi",
-        "address": "Nga Trung - Nga Son - Thanh Hoa"
+        "id": "2-hinata",
+        "name": "Hinata",
+        "address": "Tokyo - Japan"
     },
     {
-        "id": "3-thanh",
-        "name": "Thanh",
-        "address": "TT Nga Son - Thanh Hoa"
+        "id": "3-yumi",
+        "name": "Yumi",
+        "address": "Tokyo - Japan"
     }
 ]
 
-curl --location --request GET 'http://localhost:8080/api/user/get/1-duong' \
+curl --location --request GET 'http://localhost:8080/api/user/get/2-hinata' \
 --data-raw ''
 
 // output
 
 {
-    "id": "1-duong",
-    "name": "Duong",
-    "address": "Nga Thuy - Nga Son - Thanh Hoa"
+    "id": "2-hinata",
+    "name": "Hinata",
+    "address": "Tokyo - Japan"
 }
 
 
 ```
+
+## Test build on docker
+
+- Install docker: https://docs.docker.com/get-docker/
+
+- Build docker images command: ```docker build -t api-brother .```
+
+- Run docker images command: ```docker run api-brother```
+
+- List images : ```docker images```

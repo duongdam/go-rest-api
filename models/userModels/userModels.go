@@ -6,9 +6,9 @@ import (
 )
 
 var listUser = []*userEntities.User{
-	{Id: "1-duong", Name: "Duong", Address: "Nga Thuy - Nga Son - Thanh Hoa"},
-	{Id: "2-phi", Name: "Phi", Address: "Nga Trung - Nga Son - Thanh Hoa"},
-	{Id: "3-thanh", Name: "Thanh", Address: "TT Nga Son - Thanh Hoa"},
+	{Id: "1-kenzo", Name: "Kenzo Hashima", Address: "Tokyo - Japan"},
+	{Id: "2-hinata", Name: "Hinata Yuri", Address: "Tokyo - Japan"},
+	{Id: "3-yumi", Name: "Yumi Sakura", Address: "Tokyo - Japan"},
 }
 
 func CreateUser(user *userEntities.User) bool {
