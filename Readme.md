@@ -1,6 +1,20 @@
 ## Start API
 
 ```bash
+Fast refresh golang app in development
+
+install air: go install github.com/cosmtrek/air@latest
+
+then Reload terminal
+
+run command: air init
+
+then run command to start server: air
+
+Development evironment auto refresh when update code
+```
+
+```bash
 # Install
 go get .
 
@@ -12,50 +26,15 @@ or
 go build -o server && ./server
 ```
 
-## Test call api
-
-```bash
-curl --location --request GET 'http://localhost:8080/api/user/list'
-
-// output
-[
-    {
-        "id": "1-kenzo",
-        "name": "Kenzo",
-        "address": "Tokyo - Japan"
-    },
-    {
-        "id": "2-hinata",
-        "name": "Hinata",
-        "address": "Tokyo - Japan"
-    },
-    {
-        "id": "3-yumi",
-        "name": "Yumi",
-        "address": "Tokyo - Japan"
-    }
-]
-
-curl --location --request GET 'http://localhost:8080/api/user/get/2-hinata' \
---data-raw ''
-
-// output
-
-{
-    "id": "2-hinata",
-    "name": "Hinata",
-    "address": "Tokyo - Japan"
-}
-
-
-```
-
 ## Test build on docker
 
+```html
 - Install docker: https://docs.docker.com/get-docker/
 
-- Build docker images command: ```docker build -t api-brother .```
+- Build docker images command: docker build -t api-test .
 
-- Run docker images command: ```docker run api-brother```
+- Run docker images command: docker run api-test
 
-- List images : ```docker images```
+- List images : docker images
+
+```

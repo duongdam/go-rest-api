@@ -1,6 +1,4 @@
 Dockerfile
 Dockerfile-stg
 README.md
-server
 .firebaserc
-firebase-admin-sdk.json

@@ -5,57 +5,36 @@ import (
 	"context"
 	firebase "firebase.google.com/go"
 	"firebase.google.com/go/auth"
+	"github.com/pkg/errors"
 	"google.golang.org/api/option"
-	"log"
-	"path/filepath"
 )
 
-func InitAuth() *auth.Client {
+func FirebaseInit() (*firebase.App, error) {
 	ctx := context.Background()
-	serviceAccountKeyFilePath, err := filepath.Abs("firebase-admin-sdk.json")
+	conf := &firebase.Config{ProjectID: "[ProjectID]"}
+	opt := option.WithCredentialsFile("initFirebase/firebase2-admin-sdk.json")
+	app, err := firebase.NewApp(ctx, conf, opt)
 	if err != nil {
-		panic("Unable to load serviceAccountKeys.json file")
+		return nil, errors.Wrap(err, "error initializing firebase auth (create firebase app)")
 	}
-	opt := option.WithCredentialsFile(serviceAccountKeyFilePath)
-	//Firebase admin SDK initialization
-	conf := &firebase.Config{ProjectID: "brother-mori"}
-
-	app, err := firebase.NewApp(context.Background(), conf, opt)
-	if err != nil {
-		panic("Firebase load error")
-	}
-
-	// Firebase Auth
-	authenticate, err := app.Auth(ctx)
-	if err != nil {
-		panic("Firebase load error")
-	}
-
-	return authenticate
+	return app, nil
 }
 
-func InitFirestore() *firestore.Client {
-	//Firebase admin SDK initialization
-	ctx := context.Background()
-	serviceAccountKeyFilePath, err := filepath.Abs("firebase-admin-sdk.json")
+func InitAuth() (*auth.Client, error) {
+	app, _ := FirebaseInit()
+	client, errAuth := app.Auth(context.Background())
+	if errAuth != nil {
+		return nil, errors.Wrap(errAuth, "error initializing firebase auth (creating client)")
+	}
+
+	return client, nil
+}
+
+func InitFirestore() (*firestore.Client, error) {
+	app, err := FirebaseInit()
 	if err != nil {
-		panic("Unable to load serviceAccountKeys.json file")
+		return nil, errors.Wrap(err, "error initializing firestore (creating client)")
 	}
-	opt := option.WithCredentialsFile(serviceAccountKeyFilePath)
-	//Firebase admin SDK initialization
-	conf := &firebase.Config{ProjectID: "brother-mori"}
-
-	app, err := firebase.NewApp(context.Background(), conf, opt)
-	if err != nil {
-		panic("Firebase load error")
-	}
-
-	// Firebase Firestore
-	db, errFirestore := app.Firestore(ctx)
-
-	if errFirestore != nil {
-		log.Fatalln("Firebase load error", errFirestore)
-	}
-
-	return db
+	client, err := app.Firestore(context.Background())
+	return client, nil
 }
