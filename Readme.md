@@ -31,7 +31,7 @@ go build -o server && ./server
 ```html
 - Install docker: https://docs.docker.com/get-docker/
 
-- Build docker images command: docker build -t api-test .
+- Build docker images command: docker build -t api-test . or docker build -t api-test -f Dockerfile-stg .
 
 - Run docker images command: docker run api-test or docker run --publish 8080:8080 api-test (truy cập localhost:8080 để test)
 
