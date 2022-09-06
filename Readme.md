@@ -33,7 +33,7 @@ go build -o server && ./server
 
 - Build docker images command: docker build -t api-test .
 
-- Run docker images command: docker run api-test or docker run --publish 8080:8080 api-brother (truy cập localhost:8080 để test)
+- Run docker images command: docker run api-test or docker run --publish 8080:8080 api-test (truy cập localhost:8080 để test)
 
 - List images : docker images
 
